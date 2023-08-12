@@ -1,3 +1,11 @@
+a{
+    text-decoration: none;
+}
+
+body{
+    background-color: #efefef;
+}
+
 header img{
     background-color: black;
     border-radius: .8rem;
@@ -8,17 +16,19 @@ header img{
 header h1{
     font-weight: bold;
     font-size: 2rem;
+    margin: 0;
 }
 
-.form-item label{
+header p{
+    font-size: .88rem;
+}
+
+.form-item{
     font-size: .9rem;
 }
 
 .form-item input{
-    display: block;
-    border-radius: .4rem;
-    padding: .5rem .6rem;
-    width: 100%;
+    background-color: #ededed;
 }
 
 .form-button > *{
@@ -32,6 +42,7 @@ header h1{
 .form-button button{
     background-color: black;
     color: white;
+    margin-bottom: .7rem;
 }
 
 .form-button img{
@@ -47,6 +58,7 @@ header h1{
     text-decoration: none;
 }
 
-.form-link{
-    text-align: center;
+.form-signup a{
+    color: black;
+    font-weight: 600;
 }

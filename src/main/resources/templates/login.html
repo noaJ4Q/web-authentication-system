@@ -9,29 +9,28 @@
               crossorigin="anonymous">
         <link href="../static/css/styles.css" rel="stylesheet">
 
-
         <title>Title</title>
     </head>
-    <body class="vh-100 d-flex align-items-center justify-content-center">
+    <body class="vh-100 row d-flex align-items-center justify-content-center">
 
-        <section class="card">
-            <div class="card-body p-5">
-                <header class="text-center">
+        <section class="card col-10 col-sm-7 col-md-6 col-lg-5 col-xl-4 col-xxl-3 p-4 rounded-4">
+            <div class="card-body">
+                <header class="text-center mb-5">
                     <img src="../static/img/generic-logo.png" alt="logo">
                     <h1>Welcome Back</h1>
                     <p>Please enter your credentials</p>
                 </header>
                 <main>
                     <form action="#">
-                        <div class="form-item">
+                        <div class="form-item mb-4">
                             <label for="email">Email</label>
-                            <input id="email" type="text" placeholder="Enter your email">
+                            <input id="email" class="form-control" type="text" placeholder="Enter your email">
                         </div>
-                        <div class="form-item">
+                        <div class="form-item mb-3">
                             <label for="pass">Password</label>
-                            <input id="pass" type="password" placeholder="Enter your password">
+                            <input id="pass" class="form-control" type="password" placeholder="Enter your password">
                         </div>
-                        <div class="d-flex justify-content-between">
+                        <div class="form-item d-flex align-items-center justify-content-between mb-5">
                             <div>
                                 <input id="remember" type="checkbox">
                                 <label for="remember">Remember me</label>
@@ -42,16 +41,17 @@
                             <button type="submit">Log in</button>
                         </div>
                         <div class="form-button">
-                            <a href="#"><img src="../static/img/google-logo.png" alt="google-logo">Log in with Google</a>
+                            <a href="#"><img src="../static/img/google-logo.png" alt="google-logo">Log in with
+                                Google</a>
                         </div>
                     </form>
+                    <div class="form-item form-signup text-center mt-4">
+                        <span>
+                            Don't have an account?
+                        </span>
+                        <a href="#">Sign up</a>
+                    </div>
                 </main>
-                <div class="form-link">
-                    <span>
-                        Don't have an account?
-                    </span>
-                    <a href="#">Sign up</a>
-                </div>
             </div>
         </section>
 
