@@ -3,19 +3,14 @@
     <head>
         <meta charset="UTF-8">
 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-              crossorigin="anonymous">
-        <link href="../static/css/styles.css" rel="stylesheet">
-
+        <th:block th:replace="~{/fragments/util.html::styles}"></th:block>
         <title>Title</title>
     </head>
     <body class="vh-100 row ps-4 py-4 d-flex align-items-center justify-content-start">
         <section class="card col-md-9 col-xl-7 col-xxl-6 h-100 p-5 rounded-end-5">
             <div class="card-body px-xxl-5">
                 <header class="d-flex justify-content-start align-items-center gap-3 mb-5">
-                    <img src="../static/img/logo.png" alt="logo">
+                    <img th:src="@{/img/logo.png}" alt="logo">
                     <div>
                         <h1>Get started</h1>
                         <p class="m-0">Create your new account</p>
@@ -59,7 +54,7 @@
                             </div>
                             <div class="line"></div>
                             <div class="form-button">
-                                <a href="#"><img src="../static/img/logo-google.png" alt="google-logo">Sign up with Google</a>
+                                <a href="#"><img th:src="@{/img/logo-google.png}" alt="google-logo">Sign up with Google</a>
                             </div>
                         </div>
                     </div>
@@ -67,7 +62,7 @@
                         <span>
                             Have an account?
                         </span>
-                        <a href="#">Log in</a>
+                        <a th:href="@{/}">Log in</a>
                     </div>
                 </main>
             </div>
