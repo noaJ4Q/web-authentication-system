@@ -14,4 +14,9 @@ public class General {
     public String signupPage(){
         return "signup";
     }
+
+    @GetMapping("/forgot")
+    public String forgotPage(){
+        return "forgot";
+    }
 }

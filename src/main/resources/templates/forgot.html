@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+        crossorigin="anonymous">
+    <link href="../static/css/styles.css" rel="stylesheet">
+    
+    <title>Title</title>
+</head>
+<body class="vh-100 row ps-4 py-4 d-flex align-items-center justify-content-start">
+    <section class="card col-md-9 col-xl-7 col-xxl-6 h-100 p-5 rounded-end-5">
+        <div class="card-body px-xxl-5">
+            <header class="d-flex justify-content-start align-items-center gap-3 mb-5">
+                <img th:src="@{/img/logo.png}" alt="logo">
+                <div>
+                    <h1>Recover your account</h1>
+                    <p class="m-0">Follow the instructions</p>
+                </div>
+            </header>
+            <main>
+                <p>Introduce the email associated to your account in order to send you the instructions to recover it.</p>
+                <div class="row mb-5">
+                    <div class="col-sm-6 mb-4 mb-sm-0">
+                        <div class="form-item mb-4">
+                            <label for="email">Email</label>
+                            <input id="email" class="form-control" type="text" placeholder="Enter your email">
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-9 col-sm-6">
+                        <div class="form-button">
+                            <button type="submit">Send email</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-item form-signup text-center mt-4  ">
+                    <span>
+                        Remember your password?
+                    </span>
+                    <a th:href="@{/}">Log in</a>
+                </div>
+            </main>
+        </div>
+    </section>
+</body>
+</html>
