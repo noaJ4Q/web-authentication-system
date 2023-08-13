@@ -28,7 +28,7 @@ header p{
 }
 
 .form-item input{
-    background-color: #ededed;
+    background-color: #fafafa;
 }
 
 .form-button > *{
@@ -60,4 +60,20 @@ header p{
 .form-signup a{
     color: black;
     font-weight: 600;
+}
+
+.line{
+    background-color: #e0e0e0;
+    height: 1px;
+    margin: 1.2rem auto;
+    position: relative;
+    width: 90%;
+}
+
+.line::before{
+    content: "or";
+    left: 50%;
+    padding: 0 1rem;
+    position: absolute;
+    transform: translate(-50%,-50%);
 }

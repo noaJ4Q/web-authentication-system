@@ -11,23 +11,25 @@
 
         <title>Title</title>
     </head>
-    <body class="vh-100 ps-4 py-4 d-flex align-items-center justify-content-start">
-        <section class="card rounded-end-5">
+    <body class="vh-100 row ps-4 py-4 d-flex align-items-center justify-content-start">
+        <section class="card col-md-8 col-xl-7 col-xxl-6 h-100 p-5 rounded-end-5">
             <div class="card-body">
-                <header>
+                <header class="d-flex justify-content-start align-items-center gap-3 mb-4">
                     <img src="../static/img/logo.png" alt="logo">
-                    <h1>Get started</h1>
-                    <p>Create your new account</p>
+                    <div>
+                        <h1>Get started</h1>
+                        <p class="m-0">Create your new account</p>
+                    </div>
                 </header>
                 <main>
-                    <p>Complete the following information:</p>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-item">
+                    <p>Complete the following information</p>
+                    <div class="row mb-5">
+                        <div class="col-sm-6">
+                            <div class="form-item mb-4">
                                 <label for="fullName">Full name</label>
                                 <input id="fullName" class="form-control" type="text" placeholder="Enter your name">
                             </div>
-                            <div class="form-item">
+                            <div class="form-item mb-4">
                                 <label for="email">Email</label>
                                 <input id="email" class="form-control" type="text" placeholder="Enter your email">
                             </div>
@@ -39,8 +41,8 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="form-item">
+                        <div class="col-sm-6">
+                            <div class="form-item mb-4">
                                 <label for="pass">Password</label>
                                 <input id="pass" class="form-control" type="password" placeholder="Enter your password">
                             </div>
@@ -51,21 +53,21 @@
                         </div>
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-7">
+                        <div class="col-9 col-sm-6">
                             <div class="form-button">
                                 <button type="submit">Create account</button>
                             </div>
-                            or
+                            <div class="line"></div>
                             <div class="form-button">
                                 <a href="#"><img src="../static/img/logo-google.png" alt="google-logo">Sign up with Google</a>
                             </div>
                         </div>
                     </div>
-                    <div class="form-item form-signup text-center">
+                    <div class="form-item form-signup text-center mt-4  ">
                         <span>
                             Have an account?
                         </span>
-                        <a href="#">Sign in</a>
+                        <a href="#">Log in</a>
                     </div>
                 </main>
             </div>
