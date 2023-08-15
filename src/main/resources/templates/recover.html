@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+              crossorigin="anonymous">
+        <link href="../static/css/styles.css" rel="stylesheet">
+        <!--<th:block th:replace="~{/fragments/util.html::styles}"></th:block>-->
+        <title>Title</title>
+
+    </head>
+    <body class="vh-100 row ps-4 py-4 d-flex align-items-center justify-content-start">
+        <section class="card col-md-9 col-xl-7 col-xxl-6 h-100 p-5 rounded-end-5">
+            <div class="card-body px-xxl-5">
+                <header class="d-flex justify-content-start align-items-center gap-3 mb-5">
+                    <img th:src="@{/img/logo.png}" alt="logo">
+                    <div>
+                        <h1>Recover your account</h1>
+                        <p class="m-0">Reset your password</p>
+                    </div>
+                </header>
+                <main>
+                    <p>Update your password to a new one</p>
+                    <div class="row mb-5">
+                        <div class="col-sm-6 mb-4 mb-sm-0">
+                            <div class="form-item mb-4">
+                                <label for="newPass">New password</label>
+                                <input id="newPass" class="form-control" type="password" placeholder="Enter your new password">
+                            </div>
+                            <div class="form-item mb-4">
+                                <label for="confirmPass">Confirm password</label>
+                                <input id="confirmPass" class="form-control" type="password" placeholder="Confirm your password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-9 col-sm-6">
+                            <div class="form-button">
+                                <button type="submit">Reset password</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-item form-signup text-center mt-4  ">
+                        <span>
+                            Remember your password?
+                        </span>
+                        <a th:href="@{/}">Log in</a>
+                    </div>
+                </main>
+            </div>
+        </section>
+        <th:block th:replace="~{fragments/util.html::scripts}"></th:block>
+        <!--
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+                crossorigin="anonymous"></script>
+        -->
+    </body>
+</html>
