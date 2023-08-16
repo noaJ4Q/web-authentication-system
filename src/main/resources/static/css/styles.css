@@ -92,3 +92,14 @@ header p{
 .profile-option:hover{
     background-color: #eaeaea;
 }
+
+.navigate-button{
+    background-color: black;
+    border: none;
+    border-radius: 1.1rem;
+    color: white;
+    font-size: .9rem;
+    font-weight: 600;
+    padding: .2rem 1.5rem;
+    width: fit-content;
+}

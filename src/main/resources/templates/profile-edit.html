@@ -9,7 +9,7 @@
             crossorigin="anonymous">
     <link href="../static/css/styles.css" rel="stylesheet">
 
-    <title>title</title>
+    <title>Title</title>
 </head>
 <body class="vh-100">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -25,6 +25,29 @@
             </form>
         </div>
     </nav>
-    
+    <main class="h-75 d-flex align-items-center justify-content-center">
+        <section class="card rounded-4 p-5">
+            <a href="#" class="navigate-button mb-3">back</a>
+            <header class="mb-4">
+                    <h1>Edit profile</h1>
+                    <p class="m-0">update your information</p>
+            </header>
+            <div>
+                <form action="#">
+                    <div class="form-item mb-4">
+                        <label for="fullName">Full name</label>
+                            <input id="fullName" class="form-control" type="text" placeholder="Enter your new name">
+                    </div>
+                    <div class="form-item mb-5">
+                        <label for="email">Email</label>
+                        <input id="email" class="form-control" type="text" placeholder="Enter your email">
+                    </div>
+                    <div class="form-button">
+                        <button type="submit">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
