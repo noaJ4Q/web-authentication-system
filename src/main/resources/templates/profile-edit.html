@@ -16,15 +16,15 @@
                     <p class="m-0">update your information</p>
             </header>
             <div>
-                <form method="post" th:action="@{/user/edit}">
-                    <input name="id" type="hidden" th:value="${user.id}">
+                <form method="post" th:action="@{/user/edit}" th:object="${user}">
+                    <input type="hidden" th:field="*{id}">
                     <div class="form-item mb-4">
-                        <label for="fullname">Full name</label>
-                        <input id="fullname" name="fullname" class="form-control" type="text" placeholder="Enter your new name" th:value="${user.fullname}">
+                        <label>Full name</label>
+                        <input class="form-control" type="text" placeholder="Enter your new name" th:field="*{fullname}">
                     </div>
                     <div class="form-item mb-5">
-                        <label for="email">Email</label>
-                        <input id="email" name="email" class="form-control" type="text" placeholder="Enter your email" th:value="${user.email}">
+                        <label>Email</label>
+                        <input class="form-control" type="text" placeholder="Enter your email" th:field="*{email}">
                     </div>
                     <div class="form-button">
                         <button type="submit">Save changes</button>
