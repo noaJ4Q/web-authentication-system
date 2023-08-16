@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(method = RequestMethod.GET, value = "/home")
+@RequestMapping(value = "/user")
 public class UserController {
 
     @Autowired
@@ -20,15 +21,22 @@ public class UserController {
 
     @GetMapping(value = {"", "/"})
     public String homePage(Model model){
-        User user = userRepository.findById(id).get();
 
-        model.addAttribute("user", user);
+        model.addAttribute("user", userRepository.findById(id).get());
         return "home";
     }
 
     @GetMapping("/edit")
-    public String editPage(){
+    public String editPage(Model model){
+
+        model.addAttribute("user", userRepository.findById(id).get());
         return "profile-edit";
+    }
+
+    @PostMapping("/edit")
+    public String saveUser(User user){
+        userRepository.save(user);
+        return "redirect:/user";
     }
 
     @GetMapping("/pass")

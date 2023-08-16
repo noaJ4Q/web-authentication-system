@@ -10,20 +10,21 @@
 
     <main class="h-75 d-flex align-items-center justify-content-center">
         <section class="card rounded-4 p-5">
-            <a th:href="@{/home/}" class="navigate-button mb-3">back</a>
+            <a th:href="@{/user/}" class="navigate-button mb-3">back</a>
             <header class="mb-4">
                     <h1>Edit profile</h1>
                     <p class="m-0">update your information</p>
             </header>
             <div>
-                <form action="#">
+                <form method="post" th:action="@{/user/edit}">
+                    <input name="id" type="hidden" th:value="${user.id}">
                     <div class="form-item mb-4">
-                        <label for="fullName">Full name</label>
-                        <input id="fullName" class="form-control" type="text" placeholder="Enter your new name">
+                        <label for="fullname">Full name</label>
+                        <input id="fullname" name="fullname" class="form-control" type="text" placeholder="Enter your new name" th:value="${user.fullname}">
                     </div>
                     <div class="form-item mb-5">
                         <label for="email">Email</label>
-                        <input id="email" class="form-control" type="text" placeholder="Enter your email">
+                        <input id="email" name="email" class="form-control" type="text" placeholder="Enter your email" th:value="${user.email}">
                     </div>
                     <div class="form-button">
                         <button type="submit">Save changes</button>
