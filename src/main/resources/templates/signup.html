@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http:/www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <th:block th:replace="~{/fragments/util.html::styles}"></th:block>
@@ -17,39 +17,44 @@
                 </header>
                 <main>
                     <p>Complete the following information</p>
-                    <div class="row mb-5">
-                        <div class="col-sm-6 mb-4 mb-sm-0">
-                            <div class="form-item mb-4">
-                                <label for="fullName">Full name</label>
-                                <input id="fullName" class="form-control" type="text" placeholder="Enter your name">
+                    <form method="post" th:action="@{/signup}">
+                        <div class="row mb-5">
+                            <div class="col-sm-6 mb-4 mb-sm-0">
+                                <div class="form-item mb-4">
+                                    <label for="fullname">Full name</label>
+                                    <input id="fullname" name="fullname" class="form-control" type="text" placeholder="Enter your name">
+                                </div>
+                                <div class="form-item mb-4">
+                                    <label for="email">Email</label>
+                                    <input id="email" name="email" class="form-control" type="text" placeholder="Enter your email">
+                                </div>
                             </div>
-                            <div class="form-item mb-4">
-                                <label for="email">Email</label>
-                                <input id="email" class="form-control" type="text" placeholder="Enter your email">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-item mb-4">
-                                <label for="pass">Password</label>
-                                <input id="pass" class="form-control" type="password" placeholder="Enter your password">
-                            </div>
-                            <div class="form-item">
-                                <label for="confPass">Confirm password</label>
-                                <input id="confPass" class="form-control" type="password" placeholder="Confirm your password">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-9 col-sm-6">
-                            <div class="form-button">
-                                <button type="submit">Create account</button>
-                            </div>
-                            <div class="line"></div>
-                            <div class="form-button">
-                                <a href="#"><img th:src="@{/img/logo-google.png}" alt="google-logo">Sign up with Google</a>
+                            <div class="col-sm-6">
+                                <div class="form-item mb-4">
+                                    <label for="pass">Password</label>
+                                    <input id="pass" name="password" class="form-control" type="password"
+                                           placeholder="Enter your password">
+                                </div>
+                                <div class="form-item">
+                                    <label for="confPass">Confirm password</label>
+                                    <input id="confPass" name="confirmPassword" class="form-control" type="password"
+                                           placeholder="Confirm your password">
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="row justify-content-center">
+                            <div class="col-9 col-sm-6">
+                                <div class="form-button">
+                                    <button type="submit">Create account</button>
+                                </div>
+                                <div class="line"></div>
+                                <div class="form-button">
+                                    <a href="#"><img th:src="@{/img/logo-google.png}" alt="google-logo">Sign up with
+                                        Google</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <div class="form-item form-signup text-center mt-4  ">
                         <span>
                             Have an account?
@@ -59,6 +64,6 @@
                 </main>
             </div>
         </section>
-        
+
     </body>
 </html>
