@@ -2,9 +2,8 @@
 <html lang="en" xmlns:th="http:/www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-
         <th:block th:replace="~{/fragments/util.html::styles}"></th:block>
-        <title>Title</title>
+        <title>Sign up</title>
     </head>
     <body class="vh-100 row ps-4 py-4 d-flex align-items-center justify-content-start">
         <section class="card col-md-9 col-xl-7 col-xxl-6 h-100 p-5 rounded-end-5">
@@ -27,13 +26,6 @@
                             <div class="form-item mb-4">
                                 <label for="email">Email</label>
                                 <input id="email" class="form-control" type="text" placeholder="Enter your email">
-                            </div>
-                            <div class="form-item">
-                                <label for="role">Role</label>
-                                <select id="role" class="form-select" name="role">
-                                    <option>Role 1</option>
-                                    <option>Role 2</option>
-                                </select>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -68,6 +60,5 @@
             </div>
         </section>
         
-        <th:block th:replace="~{fragments/util.html::scripts}"></th:block>
     </body>
 </html>

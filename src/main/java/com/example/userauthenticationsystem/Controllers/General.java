@@ -16,7 +16,7 @@ public class General {
         return "signup";
     }
 
-    @GetMapping("/forgot/{token}")
+    @GetMapping(value = {"/forgot", "/forgot/{token}"})
     public String forgotPage(@PathVariable(name = "token", required = false) String token){
         return "forgot";
     }

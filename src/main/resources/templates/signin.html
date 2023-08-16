@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-
         <!--
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -11,7 +10,7 @@
         <link href="../static/css/styles.css" rel="stylesheet">
         -->
         <th:block th:replace="~{/fragments/util.html::styles}"></th:block>
-        <title>Title</title>
+        <title>Sign in</title>
     </head>
     <body class="vh-100 row d-flex align-items-center justify-content-center">
 
@@ -37,7 +36,7 @@
                                 <input id="remember" type="checkbox">
                                 <label for="remember">Remember me</label>
                             </div>
-                            <a href="#">Forgot your password?</a>
+                            <a th:href="@{/forgot}">Forgot your password?</a>
                         </div>
                         <div class="form-button mb-2">
                             <button type="submit">Log in</button>

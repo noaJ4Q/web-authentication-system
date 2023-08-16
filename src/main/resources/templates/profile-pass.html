@@ -1,33 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-            crossorigin="anonymous">
-    <link href="../static/css/styles.css" rel="stylesheet">
-
-    <title>Title</title>
+    <th:block th:replace="~{/fragments/util.html::styles}"></th:block>
+    <title>Password</title>
 </head>
 <body class="vh-100">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container">
-            <a href="#" class="navbar-brand">
-                <img src="../static/img/logo.png" alt="logo">
-                User interface 1
-            </a>
-            <form action="#" class="d-flex">
-                <div class="form-button">
-                    <button class="px-4" type="submit">Log out</button>
-                </div>
-            </form>
-        </div>
-    </nav>
+    <div th:replace="~{fragments/common.html::navbar}"></div>
+
     <main class="h-75 d-flex align-items-center justify-content-center">
         <section class="card rounded-4 p-5">
-            <a href="#" class="navigate-button mb-3">back</a>
+            <a th:href="@{/home/}" class="navigate-button mb-3">back</a>
             <header class="mb-4">
                     <h1>New password</h1>
                     <p class="m-0">update your information</p>
