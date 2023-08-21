@@ -22,14 +22,14 @@
                     <p>Please enter your credentials</p>
                 </header>
                 <main>
-                    <form action="#">
+                    <form method="post" th:action="@{/signin}">
                         <div class="form-item mb-4">
                             <label for="email">Email</label>
-                            <input id="email" class="form-control" type="text" placeholder="Enter your email">
+                            <input name="email" id="email" class="form-control" type="text" placeholder="Enter your email">
                         </div>
                         <div class="form-item mb-3">
                             <label for="pass">Password</label>
-                            <input id="pass" class="form-control" type="password" placeholder="Enter your password">
+                            <input name="password" id="pass" class="form-control" type="password" placeholder="Enter your password">
                         </div>
                         <div class="form-item d-flex align-items-center justify-content-between mb-5">
                             <div>
