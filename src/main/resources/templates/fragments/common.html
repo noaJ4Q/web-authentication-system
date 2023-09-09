@@ -10,7 +10,7 @@
                 <img th:src="@{/img/logo.png}" alt="logo">
                 <span class="fw-semibold ms-2">User interface</span>
             </a>
-            <form action="#" class="d-flex">
+            <form method="post" th:action="@{/logout}" class="d-flex">
                 <div class="form-button">
                     <button class="px-4" type="submit">Log out</button>
                 </div>

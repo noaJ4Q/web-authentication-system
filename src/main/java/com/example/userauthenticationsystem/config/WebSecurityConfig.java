@@ -13,6 +13,7 @@ public class WebSecurityConfig {
         http.formLogin()
                 .loginPage("/")
                 .loginProcessingUrl("/signin")
+                .defaultSuccessUrl("/user")
                 .usernameParameter("email")
                 .passwordParameter("password");
 

@@ -18,17 +18,20 @@
                 <main>
                     <p>Complete the following information</p>
                     <form method="post" th:action="@{/signup}">
-                        <div class="row mb-5">
+                        <div class="row mb-5 mt-1">
                             <div class="col-sm-6 mb-4 mb-sm-0">
                                 <div class="form-item mb-4">
                                     <label for="fullname">Full name</label>
                                     <input id="fullname" name="fullname" class="form-control" type="text" placeholder="Enter your name">
                                 </div>
+                            </div>
+                            <div class="col-sm-6">
                                 <div class="form-item mb-4">
                                     <label for="email">Email</label>
                                     <input id="email" name="email" class="form-control" type="text" placeholder="Enter your email">
                                 </div>
                             </div>
+                            <!--
                             <div class="col-sm-6">
                                 <div class="form-item mb-4">
                                     <label for="pass">Password</label>
@@ -41,6 +44,7 @@
                                            placeholder="Confirm your password">
                                 </div>
                             </div>
+                            -->
                         </div>
                         <div class="row justify-content-center">
                             <div class="col-9 col-sm-6">
