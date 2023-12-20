@@ -9,13 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class GeneralController {
-    @GetMapping("/")
+    @GetMapping(value = {"", "/"})
     public String signinPage(){
         return "signin";
     }
-
-    @PostMapping("/signin")
-    public String signin(){return "redirect:/user/";}
 
     @GetMapping("/signup")
     public String signupPage(){
