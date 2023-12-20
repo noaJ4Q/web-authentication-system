@@ -14,6 +14,9 @@ public class GeneralController {
         return "signin";
     }
 
+    @PostMapping("/signin")
+    public String signin(){return "redirect:/user/";}
+
     @GetMapping("/signup")
     public String signupPage(){
         return "signup";
