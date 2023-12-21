@@ -54,6 +54,8 @@ public class WebConfig {
                 .requestMatchers("/user", "/user/**").authenticated()
                 .anyRequest().permitAll();
 
+        httpSecurity.logout();
+
         return httpSecurity.build();
     }
 
