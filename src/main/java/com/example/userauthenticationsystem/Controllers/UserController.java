@@ -2,6 +2,7 @@ package com.example.userauthenticationsystem.Controllers;
 
 import com.example.userauthenticationsystem.Entities.User;
 import com.example.userauthenticationsystem.Repositories.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,20 +17,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "/user")
 public class UserController {
 
-    @Autowired
+    final
     UserRepository userRepository;
 
-    private int id = 1;
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @GetMapping(value = {"", "/"})
-    public String homePage(Model model){
-        model.addAttribute("user", userRepository.findById(id).get());
+    public String homePage(Model model, HttpSession session){
+
+        User user = getUserSession(session);
+        model.addAttribute("user", user);
+
         return "home";
     }
 
     @GetMapping("/edit")
-    public String editPage(Model model){
-        model.addAttribute("user", userRepository.findById(id).get());
+    public String editPage(Model model, HttpSession session){
+
+        User user = getUserSession(session);
+        model.addAttribute("user", user);
         return "profile-edit";
     }
 
@@ -48,5 +56,9 @@ public class UserController {
     @GetMapping("/pass")
     public String passwordPage(){
         return "profile-pass";
+    }
+
+    private User getUserSession(HttpSession session){
+        return (User) session.getAttribute("user");
     }
 }

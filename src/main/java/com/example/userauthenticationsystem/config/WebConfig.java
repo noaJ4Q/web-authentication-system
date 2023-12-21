@@ -1,8 +1,10 @@
 package com.example.userauthenticationsystem.config;
 
+import com.example.userauthenticationsystem.Repositories.UserRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,10 +26,14 @@ import java.io.IOException;
 public class WebConfig {
 
     final
+    UserRepository userRepository;
+
+    final
     DataSource dataSource;
 
-    public WebConfig(DataSource dataSource) {
+    public WebConfig(DataSource dataSource, UserRepository userRepository) {
         this.dataSource = dataSource;
+        this.userRepository = userRepository;
     }
 
     @Bean
@@ -40,6 +46,9 @@ public class WebConfig {
                 .successHandler((request, response, authentication) -> {
                     DefaultSavedRequest savedRequest =
                             (DefaultSavedRequest) request.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", userRepository.findByEmail(authentication.getName()));
 
                     if (savedRequest != null){
                         String targetURL = savedRequest.getRequestURL();
@@ -54,7 +63,10 @@ public class WebConfig {
                 .requestMatchers("/user", "/user/**").authenticated()
                 .anyRequest().permitAll();
 
-        httpSecurity.logout();
+        httpSecurity.logout()
+                .logoutSuccessUrl("/")
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true);
 
         return httpSecurity.build();
     }
