@@ -91,10 +91,12 @@ header p{
     padding: .3rem 1rem;
     transition: all 0.3s;
     text-align: center;
+    text-wrap: none;
 }
 
 .profile-option:hover{
-    background-color: #eaeaea;
+    background-color: #000;
+    color: white;
 }
 
 .navigate-button{

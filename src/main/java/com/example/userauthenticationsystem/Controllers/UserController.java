@@ -38,17 +38,20 @@ public class UserController {
 
         User user = getUserSession(session);
         model.addAttribute("user", user);
+
         return "profile-edit";
     }
 
     @PostMapping("/edit")
-    public String saveUser(@Valid User user, BindingResult bindingResult){
+    public String saveUser(@Valid User user, BindingResult bindingResult, HttpSession session){
         if (bindingResult.hasErrors()){
             System.out.println("Validation error: "+bindingResult);
             return "profile-edit";
         }
         else{
             userRepository.save(user);
+            session.setAttribute("user", user);
+
             return "redirect:/user";
         }
     }
