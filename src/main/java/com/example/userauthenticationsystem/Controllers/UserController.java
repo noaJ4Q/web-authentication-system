@@ -43,7 +43,8 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String saveUser(@Valid User user, BindingResult bindingResult, HttpSession session){
+    public String saveUser(@Valid User user, BindingResult bindingResult,
+                           HttpSession session){
         if (bindingResult.hasErrors()){
             System.out.println("Validation error: "+bindingResult);
             return "profile-edit";
