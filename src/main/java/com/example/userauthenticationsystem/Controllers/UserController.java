@@ -1,6 +1,8 @@
 package com.example.userauthenticationsystem.Controllers;
 
+import com.example.userauthenticationsystem.Entities.Credentials;
 import com.example.userauthenticationsystem.Entities.User;
+import com.example.userauthenticationsystem.Repositories.CredentialsRepository;
 import com.example.userauthenticationsystem.Repositories.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -19,9 +21,12 @@ public class UserController {
 
     final
     UserRepository userRepository;
+    private final CredentialsRepository credentialsRepository;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository,
+                          CredentialsRepository credentialsRepository) {
         this.userRepository = userRepository;
+        this.credentialsRepository = credentialsRepository;
     }
 
     @GetMapping(value = {"", "/"})
@@ -51,6 +56,7 @@ public class UserController {
         }
         else{
             userRepository.save(user);
+            updateCredentialsEmail(user);
             session.setAttribute("user", user);
 
             return "redirect:/user";
@@ -64,5 +70,11 @@ public class UserController {
 
     private User getUserSession(HttpSession session){
         return (User) session.getAttribute("user");
+    }
+
+    private void updateCredentialsEmail(User user){
+        Credentials credentials = credentialsRepository.findById(user.getId()).get();
+        credentials.setEmail(user.getEmail());
+        credentialsRepository.save(credentials);
     }
 }
