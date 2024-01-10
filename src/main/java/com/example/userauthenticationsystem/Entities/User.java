@@ -19,6 +19,8 @@ public class User implements Serializable {
     private String fullname;
     @NotBlank
     private String email;
+    private int state;
+    private int role;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn

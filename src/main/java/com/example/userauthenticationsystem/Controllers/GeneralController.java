@@ -2,6 +2,7 @@ package com.example.userauthenticationsystem.Controllers;
 
 import com.example.userauthenticationsystem.Entities.Credentials;
 import com.example.userauthenticationsystem.Entities.User;
+import com.example.userauthenticationsystem.Repositories.CredentialsRepository;
 import com.example.userauthenticationsystem.Repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,14 +13,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class GeneralController {
 
     private final UserRepository userRepository;
+    private final CredentialsRepository credentialsRepository;
 
-    public GeneralController(UserRepository userRepository) {
+    public GeneralController(UserRepository userRepository,
+                             CredentialsRepository credentialsRepository) {
         this.userRepository = userRepository;
+        this.credentialsRepository = credentialsRepository;
     }
 
     @GetMapping(value = {"", "/"})
@@ -34,7 +39,7 @@ public class GeneralController {
 
     @PostMapping("/signup")
     public String saveUser(@Valid User user, BindingResult bindingResult,
-                           Model model,
+                           RedirectAttributes attributes,
                            @RequestParam("password") String password,
                            @RequestParam("confirmPassword") String confirmPassword){
 
@@ -45,9 +50,11 @@ public class GeneralController {
             return "signup";
         }
         else{
-            model.addAttribute("signup", true);
-            userRepository.save(user);
-            saveCredentials(user, password);
+            attributes.addFlashAttribute("signup", true);
+            //user.setState(1);
+            //user.setRole(0);
+            //userRepository.save(user);
+            //saveCredentials(user, password);
             return "redirect:/";
         }
 
@@ -61,6 +68,12 @@ public class GeneralController {
     private void saveCredentials(User user, String password){
         Credentials credentials = new Credentials();
         String encryptedPassword = new BCryptPasswordEncoder().encode(password);
+
+        credentials.setUser(user);
+        credentials.setEmail(user.getEmail());
+        credentials.setPassword(encryptedPassword);
+
+        credentialsRepository.save(credentials);
     }
 
     private boolean validatePassword(String password, String confirmPassword){
