@@ -7,13 +7,12 @@ import com.example.userauthenticationsystem.Repositories.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -49,12 +48,18 @@ public class UserController {
 
     @PostMapping("/edit")
     public String saveUser(@Valid User user, BindingResult bindingResult,
+                           RedirectAttributes attributes,
                            HttpSession session){
         if (bindingResult.hasErrors()){
             System.out.println("Validation error: "+bindingResult);
             return "profile-edit";
         }
         else{
+
+            User userSession = getUserSession(session);
+            user.setRole(userSession.getRole());
+            user.setState(userSession.getState());
+
             userRepository.save(user);
             updateCredentialsEmail(user);
             session.setAttribute("user", user);
@@ -68,6 +73,24 @@ public class UserController {
         return "profile-pass";
     }
 
+    @PostMapping("/pass")
+    public String savePassword(@RequestParam("pass") String oldPassword,
+                               @RequestParam("newPass") String newPassword,
+                               @RequestParam("confPass") String confPassword,
+                               RedirectAttributes attributes,
+                               HttpSession session){
+
+        if (!validNewPassword(oldPassword, newPassword, confPassword)){
+            return "redirect:/pass";
+        }
+        else{
+            User user = getUserSession(session);
+            updateCredentialsPassword(user, newPassword);
+        }
+
+        return "redirect:/user";
+    }
+
     private User getUserSession(HttpSession session){
         return (User) session.getAttribute("user");
     }
@@ -76,5 +99,16 @@ public class UserController {
         Credentials credentials = credentialsRepository.findById(user.getId()).get();
         credentials.setEmail(user.getEmail());
         credentialsRepository.save(credentials);
+    }
+
+    private void updateCredentialsPassword(User user, String newPassword){
+        Credentials credentials = credentialsRepository.findById(user.getId()).get();
+        String encryptedPassword = new BCryptPasswordEncoder().encode(newPassword);
+        credentials.setPassword(encryptedPassword);
+        credentialsRepository.save(credentials);
+    }
+
+    private boolean validNewPassword(String oldPassword, String newPassword, String confPassword){
+        return true;
     }
 }
