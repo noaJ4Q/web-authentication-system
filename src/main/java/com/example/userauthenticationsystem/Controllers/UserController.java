@@ -4,12 +4,19 @@ import com.example.userauthenticationsystem.Entities.Credentials;
 import com.example.userauthenticationsystem.Entities.User;
 import com.example.userauthenticationsystem.Repositories.CredentialsRepository;
 import com.example.userauthenticationsystem.Repositories.UserRepository;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -91,6 +98,18 @@ public class UserController {
         return "redirect:/user";
     }
 
+    @GetMapping("/delete")
+    public String deleteAccount(HttpSession session, HttpServletRequest request, HttpServletResponse response){
+
+        User user = getUserSession(session);
+        //userRepository.deleteById(user.getId());
+        //credentialsRepository.deleteById(user.getId());
+
+        logoutUser(request, response);
+
+        return "redirect:/";
+    }
+
     private User getUserSession(HttpSession session){
         return (User) session.getAttribute("user");
     }
@@ -110,5 +129,29 @@ public class UserController {
 
     private boolean validNewPassword(String oldPassword, String newPassword, String confPassword){
         return true;
+    }
+
+    private void logoutUser(HttpServletRequest request, HttpServletResponse response) {
+        boolean isSecure = false;
+        String contextPath = null;
+        if (request != null) {
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                session.invalidate();
+            }
+            isSecure = request.isSecure();
+            contextPath = request.getContextPath();
+        }
+        SecurityContext context = SecurityContextHolder.getContext();
+        SecurityContextHolder.clearContext();
+        context.setAuthentication(null);
+        if (response != null) {
+            Cookie cookie = new Cookie("JSESSIONID", null);
+            String cookiePath = StringUtils.hasText(contextPath) ? contextPath : "/";
+            cookie.setPath(cookiePath);
+            cookie.setMaxAge(0);
+            cookie.setSecure(isSecure);
+            response.addCookie(cookie);
+        }
     }
 }
