@@ -1,6 +1,7 @@
 package com.example.userauthenticationsystem.config;
 
 import com.example.userauthenticationsystem.Repositories.UserRepository;
+import com.example.userauthenticationsystem.Services.CustomOAuth2UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,15 +26,14 @@ import java.io.IOException;
 @Configuration
 public class WebConfig {
 
-    final
-    UserRepository userRepository;
+    final UserRepository userRepository;
+    final DataSource dataSource;
+    final CustomOAuth2UserService oauthUserService;
 
-    final
-    DataSource dataSource;
-
-    public WebConfig(DataSource dataSource, UserRepository userRepository) {
+    public WebConfig(DataSource dataSource, UserRepository userRepository, CustomOAuth2UserService oauthUserService) {
         this.dataSource = dataSource;
         this.userRepository = userRepository;
+        this.oauthUserService = oauthUserService;
     }
 
     @Bean
@@ -67,6 +67,11 @@ public class WebConfig {
                 .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true);
+
+        httpSecurity.oauth2Login()
+                .loginPage("/")
+                .userInfoEndpoint()
+                .userService(oauthUserService);
 
         return httpSecurity.build();
     }
