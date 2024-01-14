@@ -59,10 +59,10 @@
             </div>
         </section>
 
-        <div th:if="${signup}" class="toast align-items-center position-fixed bottom-0 end-0 m-3" id="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div th:if="${toast}" class="toast align-items-center position-fixed bottom-0 end-0 m-3" id="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
-                <div class="toast-body">
-                    Account created successfully
+                <div class="toast-body" th:text="${toastText}">
+                    Text
                 </div>
             </div>
         </div>

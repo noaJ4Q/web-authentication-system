@@ -19,27 +19,29 @@
             </header>
             <main>
                 <p>Introduce the email associated to your account in order to send you the instructions to recover it.</p>
-                <div class="row mb-5">
-                    <div class="col-sm-6 mb-4 mb-sm-0">
-                        <div class="form-item mb-4">
-                            <label for="email">Email</label>
-                            <input id="email" class="form-control" type="text" placeholder="Enter your email">
+                <form method="post" th:action="@{/forgot}">
+                    <div class="row my-5">
+                        <div class="col-sm-6 mb-4 mb-sm-0">
+                            <div class="form-item mb-4">
+                                <label for="email">Email</label>
+                                <input name="email" id="email" class="form-control" type="text" placeholder="Enter your email">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-9 col-sm-6">
-                        <div class="form-button">
-                            <button type="submit">Send email</button>
+                    <div class="row justify-content-center">
+                        <div class="col-9 col-sm-6">
+                            <div class="form-button">
+                                <button type="submit">Send email</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-item form-signup text-center mt-4  ">
+                    <div class="form-item form-signup text-center mt-4  ">
                     <span>
                         Remember your password?
                     </span>
-                    <a th:href="@{/}">Log in</a>
-                </div>
+                        <a th:href="@{/}">Log in</a>
+                    </div>
+                </form>
             </main>
         </div>
     </section>
