@@ -25,8 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping(value = "/user")
 public class UserController {
 
-    final
-    UserRepository userRepository;
+    private final UserRepository userRepository;
     private final CredentialsRepository credentialsRepository;
 
     public UserController(UserRepository userRepository,
@@ -102,8 +101,8 @@ public class UserController {
     public String deleteAccount(HttpSession session, HttpServletRequest request, HttpServletResponse response){
 
         User user = getUserSession(session);
-        //userRepository.deleteById(user.getId());
-        //credentialsRepository.deleteById(user.getId());
+        userRepository.deleteById(user.getId());
+        credentialsRepository.deleteById(user.getId());
 
         logoutUser(request, response);
 

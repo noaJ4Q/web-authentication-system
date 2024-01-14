@@ -21,6 +21,8 @@ public class User implements Serializable {
     private String email;
     private int state;
     private int role;
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn

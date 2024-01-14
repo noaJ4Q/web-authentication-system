@@ -2,6 +2,7 @@ package com.example.userauthenticationsystem.config;
 
 import com.example.userauthenticationsystem.Repositories.UserRepository;
 import com.example.userauthenticationsystem.Services.CustomOAuth2UserService;
+import com.example.userauthenticationsystem.Services.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -28,12 +30,12 @@ public class WebConfig {
 
     final UserRepository userRepository;
     final DataSource dataSource;
-    final CustomOAuth2UserService oauthUserService;
+    final UserService userService;
 
-    public WebConfig(DataSource dataSource, UserRepository userRepository, CustomOAuth2UserService oauthUserService) {
+    public WebConfig(DataSource dataSource, UserRepository userRepository, UserService userService) {
         this.dataSource = dataSource;
         this.userRepository = userRepository;
-        this.oauthUserService = oauthUserService;
+        this.userService = userService;
     }
 
     @Bean
@@ -71,7 +73,17 @@ public class WebConfig {
         httpSecurity.oauth2Login()
                 .loginPage("/")
                 .userInfoEndpoint()
-                .userService(oauthUserService);
+                .and()
+                .successHandler(((request, response, authentication) -> {
+                    DefaultOidcUser oidcUser = (DefaultOidcUser) authentication.getPrincipal();
+
+                    userService.processOAuthPostLogin(oidcUser.getEmail(), oidcUser.getFullName());
+
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", userRepository.findByEmail(oidcUser.getEmail()));
+
+                    response.sendRedirect("/user");
+                }));
 
         return httpSecurity.build();
     }
