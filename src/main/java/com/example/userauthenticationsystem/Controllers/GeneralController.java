@@ -54,10 +54,10 @@ public class GeneralController {
         }
         else{
             attributes.addFlashAttribute("signup", true);
-            //user.setState(1);
-            //user.setRole(0);
-            //userRepository.save(user);
-            //saveCredentials(user, password);
+            user.setState(1);
+            user.setRole(0);
+            userRepository.save(user);
+            saveCredentials(user, password);
             return "redirect:/";
         }
 
