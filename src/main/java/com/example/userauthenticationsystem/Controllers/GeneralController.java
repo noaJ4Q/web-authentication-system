@@ -56,12 +56,13 @@ public class GeneralController {
             System.out.println("Validation error: " + bindingResult);
             return "signup";
         } else {
-            attributes.addFlashAttribute("toast", true);
-            attributes.addFlashAttribute("toastText", "Account created successfully");
             user.setState(1);
             user.setRole(0);
             userRepository.save(user);
             saveCredentials(user, password);
+
+            attributes.addFlashAttribute("toast", true);
+            attributes.addFlashAttribute("toastText", "Account created successfully");
             return "redirect:/";
         }
 

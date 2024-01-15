@@ -75,7 +75,7 @@
                 crossorigin="anonymous"></script>
         -->
 
-        <script th:if="${signup}">
+        <script th:if="${toast}">
             const toast = document.getElementById("toast");
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
             toastBootstrap.show();
