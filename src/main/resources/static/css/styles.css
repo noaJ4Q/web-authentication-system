@@ -68,19 +68,16 @@ header p{
 }
 
 .line{
-    background-color: #e0e0e0;
-    height: 1px;
-    margin: 1.2rem auto;
-    position: relative;
-    width: 90%;
+    width: 100%;
+    text-align: center;
+    border-bottom: 2px solid #e0e0e0;
+    line-height: 0.1em;
+    margin: 20px 0 ;
 }
 
-.line::before{
-    content: "or";
-    left: 50%;
-    padding: 0 1rem;
-    position: absolute;
-    transform: translate(-50%,-50%);
+.line > span{
+    background-color: white;
+    padding: 0 10px;
 }
 
 .profile-option{
