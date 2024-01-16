@@ -103,7 +103,7 @@ public class GeneralController {
         String link = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/forgot/"+token.getCode();
         String subject = "Recover account";
         String emailText = "Hi,\n" +
-                "You have requested to reset your password. Please enter in the following lonk to restore your password (The link will be available only for 3 hours):\n" +
+                "You have requested to reset your password. Please enter in the following lonk to restore your password (The link will be available only for 1 hour):\n" +
                 link + "\n\n" +
                 "Ignore this email if you do remeber your password, or you have not made this request.";
 
@@ -122,10 +122,9 @@ public class GeneralController {
                                  @RequestParam("confirmPass") String confirmPassword,
                                  RedirectAttributes attributes){
 
-        System.out.println("user code: "+code);
-
         if (validPassword(newPassword, confirmPassword)){
             updateCredentialsPassword(code, newPassword);
+            deleteToken(code);
 
             attributes.addFlashAttribute("toast", true);
             attributes.addFlashAttribute("toastText", "Your password has been successfully reset");
@@ -137,16 +136,21 @@ public class GeneralController {
     }
 
     private void updateCredentialsPassword(String code, String newPassword){
-        Credentials credentials = credentialsRepository.findById(tokenRepository.findByCode(code).getId()).get();
+        Credentials credentials = credentialsRepository.findById(tokenRepository.findByCode(code).getUser().getId()).get();
         String encryptedPassword = new BCryptPasswordEncoder().encode(newPassword);
         credentials.setPassword(encryptedPassword);
         credentialsRepository.save(credentials);
     }
 
+    private void deleteToken(String code){
+        Token token = tokenRepository.findByCode(code);
+        tokenRepository.delete(token);
+    }
+
     private Token generateToken(String email){
         Token token = new Token();
         token.setCode(UUID.randomUUID().toString());
-        token.setExpirityDate(LocalDateTime.now().plusHours(3));
+        token.setExpirityDate(LocalDateTime.now().plusHours(1));
         token.setUser(userRepository.findByEmail(email));
         return token;
     }

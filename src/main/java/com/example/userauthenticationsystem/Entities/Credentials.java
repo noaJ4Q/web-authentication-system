@@ -11,10 +11,9 @@ import java.io.Serializable;
 @Setter
 public class Credentials implements Serializable {
     @Id
-    private int id;
+    private int id; // Using the same primary key as User
     private String email;
     private String password;
-
     @OneToOne
     @MapsId
     private User user;

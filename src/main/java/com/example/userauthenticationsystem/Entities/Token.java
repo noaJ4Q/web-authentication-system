@@ -1,9 +1,6 @@
 package com.example.userauthenticationsystem.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,11 +12,11 @@ import java.time.LocalDateTime;
 @Setter
 public class Token implements Serializable {
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id; // Using the same primary key as User
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
     private String code;
     private LocalDateTime expirityDate;
-
-    @OneToOne
-    @MapsId
-    private User user;
 }
