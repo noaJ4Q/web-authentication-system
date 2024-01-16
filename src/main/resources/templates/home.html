@@ -14,15 +14,15 @@
                 <header class="d-flex align-items-center justify-content-center gap-3">
                     <img th:src="@{/img/logo.png}" alt="logo">
                     <div>
-                        <h1 th:text="${user.fullname}">Full name</h1>
-                        <p th:text="${user.email}" class="m-0">Email</p>
+                        <h1 th:text="${session.user.fullname}">Full name</h1>
+                        <p th:text="${session.user.email}" class="m-0">Email</p>
                     </div>
                 </header>
                 <main>
                     <a th:href="@{/user/edit}" class="profile-option mb-1">
                         Edit profile
                     </a>
-                    <a th:href="@{/user/pass}" class="profile-option mb-1">
+                    <a th:if="${session.user.provider == null}" th:href="@{/user/pass}" class="profile-option mb-1">
                         Change password
                     </a>
                     <a th:href="@{/user/delete}" class="profile-option">

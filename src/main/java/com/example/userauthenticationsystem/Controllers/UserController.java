@@ -37,8 +37,8 @@ public class UserController {
     @GetMapping(value = {"", "/"})
     public String homePage(Model model, HttpSession session){
 
-        User user = getUserSession(session);
-        model.addAttribute("user", user);
+        //User user = getUserSession(session);
+        //model.addAttribute("user", user);
 
         return "home";
     }
