@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -51,18 +52,21 @@ public class GeneralController {
     @PostMapping("/signup")
     public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                            RedirectAttributes attributes,
+                           Model model,
                            @RequestParam("password") String password,
                            @RequestParam("confirmPassword") String confirmPassword) {
 
         if (bindingResult.hasErrors()) {
             System.out.println("Validation error: " + bindingResult);
+            if (!validPassword(password, confirmPassword)){
+                model.addAttribute("password", "Enter a password");
+                model.addAttribute("confirmPassword", "Confirm your password");
+                System.out.println("Validations error: Invalid passwords");
+            }
             return "signup";
         } else if (existUser(user.getEmail())){
             System.out.println("Validation error: Repeated user (email)");
-            return "signup";
-        } else if (!validPassword(password, confirmPassword)) {
-            System.out.println("Validations error: Invalid passwords");
-            return "signup";
+            return "redirect:/signup";
         } else {
             user.setState(1);
             user.setRole(0);

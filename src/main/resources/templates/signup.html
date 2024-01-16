@@ -37,15 +37,17 @@
                             <div class="col-sm-6">
                                 <div class="form-item mb-4">
                                     <label for="pass">Password</label>
-                                    <input id="pass" name="password" class="form-control" type="password"
+                                    <input id="pass" name="password" class="form-control" th:classappend="${password != null? 'is-invalid':''}" type="password"
                                            placeholder="Enter your password">
+                                    <div class="invalid-feedback" th:if="${password != null}" th:text="${password}">Validation</div>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-item">
                                     <label for="confPass">Confirm password</label>
-                                    <input id="confPass" name="confirmPassword" class="form-control" type="password"
+                                    <input id="confPass" name="confirmPassword" class="form-control" th:classappend="${confirmPassword != null? 'is-invalid':''}" type="password"
                                            placeholder="Confirm your password">
+                                    <div class="invalid-feedback" th:if="${confirmPassword != null}" th:text="${confirmPassword}">Validation</div>
                                 </div>
                             </div>
 

@@ -15,9 +15,9 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotBlank
+    @NotBlank(message = "Enter a valid full name")
     private String fullname;
-    @NotBlank
+    @NotBlank(message = "Enter a valid email")
     private String email;
     private int state;
     private int role;
