@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <th:block th:replace="~{/fragments/util.html::styles}"></th:block>
+        <title>Invalid</title>
+    </head>
+    <body class="vh-100 row g-0 ps-4 py-4 d-flex align-items-center justify-content-start">
+        <section class="card col-md-9 col-xl-7 col-xxl-6 h-100 p-5 rounded-end-5">
+            <div class="card-body px-xxl-5">
+                <header class="d-flex justify-content-start align-items-center gap-3 mb-5">
+                    <img th:src="@{/img/logo.png}" alt="logo">
+                    <div>
+                        <h1>Invalid token</h1>
+                        <p class="m-0">Check your link</p>
+                    </div>
+                </header>
+                <main>
+                    <p class="mb-5">This token has expired or has already been used</p>
+                    <div class="row justify-content-center">
+                        <div class="col-9 col-sm-6">
+                            <div class="form-button">
+                                <a th:href="@{/}">Return to login</a>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </section>
+        <th:block th:replace="~{fragments/util.html::scripts}"></th:block>
+    </body>
+</html>
