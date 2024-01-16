@@ -13,13 +13,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -46,20 +44,24 @@ public class GeneralController {
     }
 
     @GetMapping("/signup")
-    public String signupPage() {
+    public String signupPage(@ModelAttribute("user") User user) {
         return "signup";
     }
 
     @PostMapping("/signup")
-    public String saveUser(@Valid User user, BindingResult bindingResult,
+    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                            RedirectAttributes attributes,
                            @RequestParam("password") String password,
                            @RequestParam("confirmPassword") String confirmPassword) {
 
-        boolean validPasswords = validPassword(password, confirmPassword);
-
-        if (bindingResult.hasErrors() && !validPasswords) {
+        if (bindingResult.hasErrors()) {
             System.out.println("Validation error: " + bindingResult);
+            return "signup";
+        } else if (existUser(user.getEmail())){
+            System.out.println("Validation error: Repeated user (email)");
+            return "signup";
+        } else if (!validPassword(password, confirmPassword)) {
+            System.out.println("Validations error: Invalid passwords");
             return "signup";
         } else {
             user.setState(1);
@@ -96,24 +98,36 @@ public class GeneralController {
                                RedirectAttributes attributes,
                                HttpServletRequest request) {
 
-        Token token = generateToken(email);
-        tokenRepository.save(token);
+        if (existUser(email)){
+            if (repeatedToken(email)){
+                // TODO: ADD ATTRIBUTE TO MAKE USER KNOWN TO REVIEW HIS EMAIL
+                return "redirect:/forgot";
+            }
+            else{
+                Token token = generateToken(email);
+                tokenRepository.save(token);
 
-        String toastText;
-        String link = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/forgot/"+token.getCode();
-        String subject = "Recover account";
-        String emailText = "Hi,\n" +
-                "You have requested to reset your password. Please enter in the following lonk to restore your password (The link will be available only for 1 hour):\n" +
-                link + "\n\n" +
-                "Ignore this email if you do remeber your password, or you have not made this request.";
+                String toastText;
+                String link = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/forgot/"+token.getCode();
+                String subject = "Recover account";
+                String emailText = "Hi,\n" +
+                        "You have requested to reset your password. Please enter in the following lonk to restore your password (The link will be available only for 1 hour):\n" +
+                        link + "\n\n" +
+                        "Ignore this email if you do remeber your password, or you have not made this request.";
 
-        emailService.sendEmail(email, subject, emailText);
-        toastText = "Email sended to: "+email;
-        //toastText = "Error sending email to: "+email;
+                emailService.sendEmail(email, subject, emailText);
+                toastText = "Email sended to: "+email;
+                //toastText = "Error sending email to: "+email;
 
-        attributes.addFlashAttribute("toast", true);
-        attributes.addFlashAttribute("toastText", toastText);
-        return "redirect:/";
+                attributes.addFlashAttribute("toast", true);
+                attributes.addFlashAttribute("toastText", toastText);
+                return "redirect:/";
+            }
+        }
+        else{
+            // TODO: ADD ATTRIBUTE TO MAKE USER KNOWN THAT EMAIL DONT EXIST
+            return "redirect:/forgot";
+        }
     }
 
     @PostMapping("/recover")
@@ -151,7 +165,7 @@ public class GeneralController {
         Token token = new Token();
         token.setCode(UUID.randomUUID().toString());
         token.setExpirityDate(LocalDateTime.now().plusHours(1));
-        token.setUser(userRepository.findByEmail(email));
+        token.setUser(userRepository.findByEmail(email).get());
         return token;
     }
     private void saveCredentials(User user, String password) {
@@ -177,5 +191,16 @@ public class GeneralController {
 
     private boolean validPassword(String password, String confirmPassword) {
         return !password.isEmpty() && !confirmPassword.isEmpty() && password.equals(confirmPassword);
+    }
+
+    private boolean existUser(String email){
+        Optional<User> databaseUser = userRepository.findByEmail(email);
+        return databaseUser.isPresent();
+    }
+
+    private boolean repeatedToken(String email){
+        User user = userRepository.findByEmail(email).get();
+        Optional<Token> databaseToken = tokenRepository.findByUser(user);
+        return databaseToken.isPresent();
     }
 }

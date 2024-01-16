@@ -5,6 +5,8 @@ import com.example.userauthenticationsystem.Entities.User;
 import com.example.userauthenticationsystem.Repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -15,9 +17,9 @@ public class UserService {
 
     public void processOAuthPostLogin(String email, String name){
 
-        User existUser = userRepository.findByEmail(email);
+        Optional<User> existUser = userRepository.findByEmail(email);
 
-        if (existUser == null){
+        if (existUser.isEmpty()){
             User newUser = new User();
 
             newUser.setFullname(name);

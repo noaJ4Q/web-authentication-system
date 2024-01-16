@@ -17,18 +17,20 @@
                 </header>
                 <main>
                     <p>Complete the following information</p>
-                    <form class="mt-4" method="post" th:action="@{/signup}">
+                    <form class="mt-4" method="post" th:action="@{/signup}" th:object="${user}">
                         <div class="row mb-5 mt-1">
                             <div class="col-sm-6 mb-4 mb-sm-0">
                                 <div class="form-item mb-4">
-                                    <label for="fullname">Full name</label>
-                                    <input id="fullname" name="fullname" class="form-control" type="text" placeholder="Enter your name">
+                                    <label>Full name</label>
+                                    <input th:field="*{fullname}" class="form-control" th:classappend="${#fields.hasErrors('fullname')? 'is-invalid':''}" type="text" placeholder="Enter your name">
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"></div>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-item mb-4">
-                                    <label for="email">Email</label>
-                                    <input id="email" name="email" class="form-control" type="text" placeholder="Enter your email">
+                                    <label>Email</label>
+                                    <input th:field="*{email}" class="form-control" th:classappend="${#fields.hasErrors('email')? 'is-invalid':''}" type="text" placeholder="Enter your email">
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                                 </div>
                             </div>
 
