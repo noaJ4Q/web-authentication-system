@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <th:block th:replace="~{/fragments/util.html::styles}"></th:block>
-        <title>Forgot password</title>
+        <title>Reset password</title>
     </head>
     <body class="vh-100 row g-0 ps-4 py-4 d-flex align-items-center justify-content-start">
         <section class="card col-md-9 col-xl-7 col-xxl-6 h-100 p-5 rounded-end-5">
@@ -23,11 +23,13 @@
                             <div class="col-sm-6 mb-4 mb-sm-0">
                                 <div class="form-item mb-4">
                                     <label for="newPass">New password</label>
-                                    <input id="newPass" name="newPass" class="form-control" type="password" placeholder="Enter your new password">
+                                    <input id="newPass" name="newPass" class="form-control" th:classappend="${newPassword != null? 'is-invalid':''}" type="password" placeholder="Enter your new password">
+                                    <div class="invalid-feedback" th:if="${newPassword != null}" th:text="${newPassword}">Validation</div>
                                 </div>
                                 <div class="form-item mb-4">
                                     <label for="confirmPass">Confirm password</label>
-                                    <input id="confirmPass" name="confirmPass" class="form-control" type="password" placeholder="Confirm your password">
+                                    <input id="confirmPass" name="confirmPass" class="form-control" th:classappend="${confirmPassword != null? 'is-invalid':''}" type="password" placeholder="Confirm your password">
+                                    <div class="invalid-feedback" th:if="${confirmPassword != null}" th:text="${confirmPassword}">Validation</div>
                                 </div>
                             </div>
                         </div>

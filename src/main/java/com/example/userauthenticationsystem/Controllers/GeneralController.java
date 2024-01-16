@@ -143,11 +143,14 @@ public class GeneralController {
             updateCredentialsPassword(code, newPassword);
             deleteToken(code);
 
-            attributes.addFlashAttribute("toast", true);
-            attributes.addFlashAttribute("toastText", "Your password has been successfully reset");
+            attributes.addFlashAttribute("toast", "Your password has been successfully reset");
             return "redirect:/";
         }
         else{
+            if (confirmPassword.isEmpty()){
+                attributes.addFlashAttribute("confirmPassword", "Confirm your new password");
+            }
+            attributes.addFlashAttribute("newPassword", "Enter your new password");
             return "redirect:/forgot/"+code;
         }
     }
