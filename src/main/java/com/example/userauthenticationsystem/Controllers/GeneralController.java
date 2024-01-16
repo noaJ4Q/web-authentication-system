@@ -105,7 +105,7 @@ public class GeneralController {
 
         if (existUser(email)){
             if (repeatedToken(email)){
-                // TODO: ADD ATTRIBUTE TO MAKE USER KNOWN TO REVIEW HIS EMAIL
+                attributes.addFlashAttribute("toast", "A recover email was already sended, please check your inbox");
                 return "redirect:/forgot";
             }
             else{
@@ -115,22 +115,20 @@ public class GeneralController {
                 String toastText;
                 String link = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/forgot/"+token.getCode();
                 String subject = "Recover account";
-                String emailText = "Hi,\n" +
+                String emailText = "Hi,\n\n" +
                         "You have requested to reset your password. Please enter in the following lonk to restore your password (The link will be available only for 1 hour):\n" +
                         link + "\n\n" +
                         "Ignore this email if you do remeber your password, or you have not made this request.";
 
                 emailService.sendEmail(email, subject, emailText);
-                toastText = "Email sended to: "+email;
-                //toastText = "Error sending email to: "+email;
+                toastText = "Recover email sended to: "+email;
 
-                attributes.addFlashAttribute("toast", true);
-                attributes.addFlashAttribute("toastText", toastText);
+                attributes.addFlashAttribute("toast", toastText);
                 return "redirect:/";
             }
         }
         else{
-            // TODO: ADD ATTRIBUTE TO MAKE USER KNOWN THAT EMAIL DONT EXIST
+            attributes.addFlashAttribute("toast", "The email entered is invalid");
             return "redirect:/forgot";
         }
     }

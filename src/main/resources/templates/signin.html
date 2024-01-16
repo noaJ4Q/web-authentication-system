@@ -61,9 +61,9 @@
             </div>
         </section>
 
-        <div th:if="${toast}" class="toast align-items-center position-fixed bottom-0 end-0 m-3" id="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div th:if="${toast != null}" class="toast align-items-center position-fixed bottom-0 end-0 m-3" id="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
-                <div class="toast-body" th:text="${toastText}">
+                <div class="toast-body" th:text="${toast}">
                     Text
                 </div>
             </div>
@@ -77,7 +77,7 @@
                 crossorigin="anonymous"></script>
         -->
 
-        <script th:if="${toast}">
+        <script th:if="${toast != null}">
             const toast = document.getElementById("toast");
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
             toastBootstrap.show();
