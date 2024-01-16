@@ -88,17 +88,33 @@ public class UserController {
                                RedirectAttributes attributes,
                                HttpSession session){
 
-        if (!validNewPassword(oldPassword, newPassword, confPassword)){
-            return "redirect:/pass";
+        User user = getUserSession(session);
+        if (oldPassword.isEmpty()){
+            attributes.addFlashAttribute("pass", "Enter your current password");
+            return "redirect:/user/pass";
         }
-        else{
-            User user = getUserSession(session);
-            updateCredentialsPassword(user, newPassword);
-
-            attributes.addFlashAttribute("toast", "Password updated successfully");
-
-            return "redirect:/user";
+        if (!validOldPassword(user, oldPassword)){
+            attributes.addFlashAttribute("pass", "Current password entered is incorrect");
+            return "redirect:/user/pass";
         }
+        if (!validNewPassword(newPassword, confPassword)){
+
+            if (newPassword.isEmpty() || confPassword.isEmpty()){
+                attributes.addFlashAttribute("newPass", "Enter your new password");
+                attributes.addFlashAttribute("confPass", "Confirm your new password");
+            }
+            else if (!newPassword.equals(confPassword)){
+                attributes.addFlashAttribute("matchPass", "Passwords must be equals");
+            }
+
+            return "redirect:/user/pass";
+        }
+
+        //updateCredentialsPassword(user, newPassword);
+
+        attributes.addFlashAttribute("toast", "Password updated successfully");
+
+        return "redirect:/user";
     }
 
     @GetMapping("/delete")
@@ -130,8 +146,13 @@ public class UserController {
         credentialsRepository.save(credentials);
     }
 
-    private boolean validNewPassword(String oldPassword, String newPassword, String confPassword){
-        return true;
+    private boolean validOldPassword(User user, String oldPassword){
+        Credentials credentials = credentialsRepository.findById(user.getId()).get();
+        return new BCryptPasswordEncoder().matches(oldPassword, credentials.getPassword());
+    }
+
+    private boolean validNewPassword(String newPassword, String confPassword){
+        return !newPassword.isEmpty() && !confPassword.isEmpty() && newPassword.equals(confPassword);
     }
 
     private void logoutUser(HttpServletRequest request, HttpServletResponse response) {

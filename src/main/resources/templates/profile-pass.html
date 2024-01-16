@@ -19,17 +19,20 @@
                     <form method="post" th:action="@{/user/pass}">
                         <div class="form-item mb-4">
                             <label for="pass">Password</label>
-                            <input name="pass" id="pass" class="form-control" type="password" placeholder="Enter your password">
+                            <input name="pass" id="pass" class="form-control" th:classappend="${pass != null?'is-invalid':''}" type="password" placeholder="Enter your password">
+                            <div class="invalid-feedback" th:if="${pass != null}" th:text="${pass}">Validation</div>
                         </div>
                         <div class="form-item mb-4">
                             <label for="newPass">New password</label>
-                            <input name="newPass" id="newPass" class="form-control" type="password"
+                            <input name="newPass" id="newPass" class="form-control" th:classappend="${newPass != null || matchPass != null? 'is-invalid':''}" type="password"
                                    placeholder="Enter your new password">
+                            <div class="invalid-feedback" th:if="${newPass != null || matchPass != null}" th:text="${newPass != null ? newPass : matchPass}">Validation</div>
                         </div>
                         <div class="form-item mb-5">
                             <label for="confPass">Confirm password</label>
-                            <input name="confPass" id="confPass" class="form-control" type="password"
+                            <input name="confPass" id="confPass" class="form-control" th:classappend="${confPass != null || matchPass != null? 'is-invalid':''}" type="password"
                                    placeholder="Confirm your password">
+                            <div class="invalid-feedback" th:if="${confPass != null || matchPass != null}" th:text="${confPass != null ? confPass: matchPass}">Validation</div>
                         </div>
                         <div class="form-button">
                             <button type="submit">Save password</button>

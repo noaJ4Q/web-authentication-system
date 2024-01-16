@@ -20,11 +20,13 @@
                     <input type="hidden" th:field="*{id}">
                     <div class="form-item mb-4">
                         <label>Full name</label>
-                        <input class="form-control" type="text" placeholder="Enter your new name" th:field="*{fullname}">
+                        <input class="form-control" th:classappend="${#fields.hasErrors('fullname')? 'is-invalid':''}" type="text" placeholder="Enter your new name" th:field="*{fullname}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"></div>
                     </div>
                     <div class="form-item mb-5">
                         <label>Email</label>
-                        <input class="form-control" type="text" placeholder="Enter your email" th:field="*{email}">
+                        <input class="form-control" th:classappend="${#fields.hasErrors('email')? 'is-invalid':''}" type="text" placeholder="Enter your email" th:field="*{email}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                     </div>
                     <div class="form-button">
                         <button type="submit">Save changes</button>
