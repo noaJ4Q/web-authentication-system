@@ -17,9 +17,9 @@ public class UserService {
 
     public void processOAuthPostLogin(String email, String name){
 
-        Optional<User> existUser = userRepository.findByEmail(email);
+        User existUser = userRepository.findByEmail(email);
 
-        if (existUser.isEmpty()){
+        if (existUser == null){
             User newUser = new User();
 
             newUser.setFullname(name);

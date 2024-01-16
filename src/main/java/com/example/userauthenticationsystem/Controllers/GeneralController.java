@@ -56,7 +56,7 @@ public class GeneralController {
                            @RequestParam("password") String password,
                            @RequestParam("confirmPassword") String confirmPassword) {
 
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors() || !validPassword(password, confirmPassword)) {
             System.out.println("Validation error: " + bindingResult);
             if (!validPassword(password, confirmPassword)){
                 model.addAttribute("password", "Enter a password");
@@ -66,7 +66,8 @@ public class GeneralController {
             return "signup";
         } else if (existUser(user.getEmail())){
             System.out.println("Validation error: Repeated user (email)");
-            return "redirect:/signup";
+            model.addAttribute("toast", "An account with the email '"+user.getEmail()+"' already exists");
+            return "signup";
         } else {
             user.setState(1);
             user.setRole(0);
@@ -169,7 +170,7 @@ public class GeneralController {
         Token token = new Token();
         token.setCode(UUID.randomUUID().toString());
         token.setExpirityDate(LocalDateTime.now().plusHours(1));
-        token.setUser(userRepository.findByEmail(email).get());
+        token.setUser(userRepository.findByEmail(email));
         return token;
     }
     private void saveCredentials(User user, String password) {
@@ -198,13 +199,13 @@ public class GeneralController {
     }
 
     private boolean existUser(String email){
-        Optional<User> databaseUser = userRepository.findByEmail(email);
-        return databaseUser.isPresent();
+        User databaseUser = userRepository.findByEmail(email);
+        return databaseUser != null;
     }
 
     private boolean repeatedToken(String email){
-        User user = userRepository.findByEmail(email).get();
-        Optional<Token> databaseToken = tokenRepository.findByUser(user);
-        return databaseToken.isPresent();
+        User user = userRepository.findByEmail(email);
+        Token databaseToken = tokenRepository.findByUser(user);
+        return databaseToken != null;
     }
 }
