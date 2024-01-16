@@ -110,7 +110,7 @@ public class UserController {
             return "redirect:/user/pass";
         }
 
-        //updateCredentialsPassword(user, newPassword);
+        updateCredentialsPassword(user, newPassword);
 
         attributes.addFlashAttribute("toast", "Password updated successfully");
 
