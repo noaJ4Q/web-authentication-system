@@ -70,6 +70,8 @@ public class UserController {
             updateCredentialsEmail(user);
             session.setAttribute("user", user);
 
+            attributes.addFlashAttribute("toast", "Profile updated successfully");
+
             return "redirect:/user";
         }
     }
@@ -92,9 +94,11 @@ public class UserController {
         else{
             User user = getUserSession(session);
             updateCredentialsPassword(user, newPassword);
-        }
 
-        return "redirect:/user";
+            attributes.addFlashAttribute("toast", "Password updated successfully");
+
+            return "redirect:/user";
+        }
     }
 
     @GetMapping("/delete")
