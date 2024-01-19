@@ -12,9 +12,9 @@ Authentication system for a generic website.
 ## Used tools
 - Spring Boot for backend development
 - HTML, CSS, JavaScript and Bootstrap for frontend development
-- MySQL to store users data
+- MySQL to store user's data
 
-## Website caputures
+## Website captures
 Sign in
 ![image](https://github.com/noaJ4Q/web-authentication-system/assets/111481057/4bcecc15-d67b-4923-9a89-7d62d8afdc00)
 
