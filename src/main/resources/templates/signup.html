@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <th:block th:replace="~{/fragments/util.html::styles}"></th:block>
+        <div th:replace="~{/fragments/util.html::styles}"></div>
         <title>Sign up</title>
     </head>
     <body class="vh-100 row g-0 ps-4 py-4 d-flex align-items-center justify-content-start">
@@ -83,7 +83,7 @@
             </div>
         </div>
 
-        <th:block th:replace="~{fragments/util.html::scripts}"></th:block>
+        <div th:replace="~{fragments/util.html::scripts}"></div>
 
         <script th:if="${toast != null}">
             const toast = document.getElementById("toast");

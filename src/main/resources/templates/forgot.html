@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <th:block th:replace="~{/fragments/util.html::styles}"></th:block>
+    <div th:replace="~{/fragments/util.html::styles}"></div>
     
     <title>Forgot password</title>
 </head>
@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <th:block th:replace="~{fragments/util.html::scripts}"></th:block>
+    <div th:replace="~{fragments/util.html::scripts}"></div>
 
     <script th:if="${toast != null}">
         const toast = document.getElementById("toast");
