@@ -13,12 +13,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -103,34 +101,33 @@ public class GeneralController {
                                RedirectAttributes attributes,
                                HttpServletRequest request) {
 
-        if (existUser(email)){
-            if (repeatedToken(email)){
-                attributes.addFlashAttribute("toast", "A recover email was already sended, please check your inbox");
-                return "redirect:/forgot";
-            }
-            else{
-                Token token = generateToken(email);
-                tokenRepository.save(token);
-
-                String toastText;
-                String link = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/forgot/"+token.getCode();
-                String subject = "Recover account";
-                String emailText = "Hi,\n\n" +
-                        "You have requested to reset your password. Please enter in the following lonk to restore your password (The link will be available only for 1 hour):\n" +
-                        link + "\n\n" +
-                        "Ignore this email if you do remeber your password, or you have not made this request.";
-
-                emailService.sendEmail(email, subject, emailText);
-                toastText = "Recover email sended to: "+email;
-
-                attributes.addFlashAttribute("toast", toastText);
-                return "redirect:/";
-            }
-        }
-        else{
+        if (!existUser(email)){
             attributes.addFlashAttribute("toast", "The email entered is invalid");
             return "redirect:/forgot";
         }
+        if (!existToken(email)){
+            // CREATE TOKEN AND SEND RESET PASS EMAIL
+            Token token = generateToken(email);
+            tokenRepository.save(token);
+            sendResetPasswordEmail(request, email, token);
+            attributes.addFlashAttribute("toast", "Reset password email sended to: "+email);
+            return "redirect:/";
+        }
+        if (!expiredToken(email)){
+            // ASK USER TO CHECK INBOX
+            attributes.addFlashAttribute("toast", "A reset password email has already been sent, please check your inbox");
+            return "redirect:/forgot";
+        }
+        // DELETE TOKEN AND RESEND RESET PASS EMAIL
+        Token token = tokenRepository.findByUser(userRepository.findByEmail(email));
+        token.setCode(UUID.randomUUID().toString());
+        token.setExpirityDate(LocalDateTime.now().plusHours(1));
+        tokenRepository.save(token);
+
+        sendResetPasswordEmail(request, email, token);
+        String toastText = "Recover email sended to: "+email;
+        attributes.addFlashAttribute("toast", toastText);
+        return "redirect:/";
     }
 
     @PostMapping("/recover")
@@ -153,6 +150,17 @@ public class GeneralController {
             attributes.addFlashAttribute("newPassword", "Enter your new password");
             return "redirect:/forgot/"+code;
         }
+    }
+
+    private void sendResetPasswordEmail(HttpServletRequest request, String email, Token token){
+        String link = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/forgot/"+token.getCode();
+        String subject = "Recover account";
+        String emailText = "Hi,\n\n" +
+                "You have requested to reset your password. Please enter in the following lonk to restore your password (The link will be available only for 1 hour):\n" +
+                link + "\n\n" +
+                "Ignore this email if you do remeber your password, or you have not made this request.";
+
+        emailService.sendEmail(email, subject, emailText);
     }
 
     private void updateCredentialsPassword(String code, String newPassword){
@@ -204,9 +212,15 @@ public class GeneralController {
         return databaseUser != null;
     }
 
-    private boolean repeatedToken(String email){
+    private boolean existToken(String email){
         User user = userRepository.findByEmail(email);
         Token databaseToken = tokenRepository.findByUser(user);
         return databaseToken != null;
+    }
+
+    private boolean expiredToken(String email){
+        User user = userRepository.findByEmail(email);
+        Token databaseToken = tokenRepository.findByUser(user);
+        return LocalDateTime.now().isAfter(databaseToken.getExpirityDate());
     }
 }
