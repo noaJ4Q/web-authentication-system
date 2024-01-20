@@ -73,7 +73,7 @@ public class GeneralController {
             saveCredentials(user, password);
 
             attributes.addFlashAttribute("toast", true);
-            attributes.addFlashAttribute("toastText", "Account created successfully");
+            attributes.addFlashAttribute("toast", "Account created successfully");
             return "redirect:/";
         }
 
