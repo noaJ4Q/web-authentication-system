@@ -8,6 +8,7 @@ import com.example.userauthenticationsystem.Repositories.TokenRepository;
 import com.example.userauthenticationsystem.Repositories.UserRepository;
 import com.example.userauthenticationsystem.Services.EmailService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,11 @@ public class GeneralController {
     }
 
     @GetMapping(value = {"", "/"})
-    public String signinPage() {
+    public String signinPage(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            return "redirect:/user";
+        }
         return "signin";
     }
 

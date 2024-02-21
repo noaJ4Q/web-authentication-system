@@ -5,8 +5,8 @@
         <div th:replace="~{fragments/util.html::styles}"></div>
         <title>Sign up</title>
     </head>
-    <body class="vh-100 row g-0 ps-4 py-4 d-flex align-items-center justify-content-start">
-        <section class="card col-md-9 col-xl-7 col-xxl-6 h-100 p-5 rounded-end-5">
+    <body class="vh-100 row g-0 px-4 py-4 d-flex align-items-center justify-content-start">
+        <section class="card col-md-9 col-xl-7 col-xxl-6 h-100 p-4 p-sm-5 rounded-end-5">
             <div class="card-body px-xxl-5">
                 <header class="d-flex justify-content-start align-items-center gap-3 mb-5">
                     <img th:src="@{/img/logo.png}" alt="logo">
@@ -19,7 +19,7 @@
                     <p>Complete the following information</p>
                     <form class="mt-4" method="post" th:action="@{/signup}" th:object="${user}">
                         <div class="row mb-5 mt-1">
-                            <div class="col-sm-6 mb-4 mb-sm-0">
+                            <div class="col-sm-6">
                                 <div class="form-item mb-4">
                                     <label>Full name</label>
                                     <input th:field="*{fullname}" class="form-control" th:classappend="${#fields.hasErrors('fullname')? 'is-invalid':''}" type="text" placeholder="Enter your name">

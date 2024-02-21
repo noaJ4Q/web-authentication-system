@@ -6,6 +6,10 @@ p{
     margin: 0;
 }
 
+*{
+    box-sizing: border-box;
+}
+
 body{
     background-color: #efefef;
 }
@@ -105,4 +109,11 @@ header p{
     font-weight: 600;
     padding: .2rem 1.5rem;
     width: fit-content;
+}
+
+/* HOME CARD RESPONSIVE */
+@media screen and (width > 992px) { /* LARGE BREAKPOINT */
+    main .home-card {
+        width: 50%!important;
+    }
 }
