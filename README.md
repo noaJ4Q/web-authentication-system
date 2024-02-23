@@ -2,6 +2,8 @@
 
 Authentication system for a generic website.
 
+Project site: [Authentication system](http://noa-web.lat)
+
 ## Users can
 - Sign in / Sign in with Google account
 - Sign up / Sign up with Google account
